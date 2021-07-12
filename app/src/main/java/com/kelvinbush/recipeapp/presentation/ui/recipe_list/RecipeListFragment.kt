@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
@@ -35,20 +36,9 @@ class RecipeListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 val recipes = viewModel.recipes.value
-                for (recipe in recipes){
-                    Log.d(TAG, "onCreateView: ${recipe.title}")
-                }
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = "Recipe List",
-                        fontSize = 21.sp
-                    )
-                    Spacer(modifier = Modifier.padding(10.dp))
-                    Button(
-                        onClick = { findNavController().navigate(R.id.viewRecipe) }) {
-                        Text(text = "To Recipe Fragment")
-                    }
-                }
+               LazyColumn {
+
+               }
             }
         }
     }
