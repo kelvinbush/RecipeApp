@@ -10,9 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.kelvinbush.recipeapp.R
+import com.google.accompanist.coil.rememberCoilPainter
 import com.kelvinbush.recipeapp.domain.model.Recipe
 
 @Composable
@@ -34,7 +33,7 @@ fun RecipeCard(
         Column {
             recipe.featuredImage?.let { url ->
                 Image(
-                    painter = painterResource(id = R.drawable.empty_plate),
+                    painter = rememberCoilPainter(request = url),
                     contentDescription = "Place holder Image",
                     modifier = Modifier
                         .fillMaxWidth()
