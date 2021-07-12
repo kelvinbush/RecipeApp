@@ -97,7 +97,6 @@ class RecipeListFragment : Fragment() {
                                 }
                             }
                         }
-
                     }
                     LazyColumn {
                         itemsIndexed(items = recipes) { index, item ->

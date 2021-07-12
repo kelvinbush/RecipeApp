@@ -2,8 +2,8 @@ package com.kelvinbush.recipeapp.presentation.ui.recipe_list
 
 enum class FoodCategory(val value: String) {
     CHICKEN("Chicken"),
-    BEEF("beef"),
-    SOUP("soup"),
+    BEEF("Beef"),
+    SOUP("Soup"),
     DESSERT("Dessert"),
     VEGETARIAN("Vegetarian"),
     MILK("Milk"),
