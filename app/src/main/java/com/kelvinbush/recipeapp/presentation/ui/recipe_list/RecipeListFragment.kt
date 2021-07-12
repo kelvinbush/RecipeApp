@@ -12,6 +12,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Button
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
@@ -39,9 +42,16 @@ class RecipeListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 val recipes = viewModel.recipes.value
-                LazyColumn {
-                    itemsIndexed(items = recipes) { index, item ->
-                        RecipeCard(recipe = item, onClick = {})
+                val query = viewModel.query.value
+                Column {
+                    TextField(value = query, onValueChange = { newValue ->
+                        viewModel.onQueryChanged(newValue)
+                    })
+                    Spacer(modifier = Modifier.padding(10.dp))
+                    LazyColumn {
+                        itemsIndexed(items = recipes) { index, item ->
+                            RecipeCard(recipe = item, onClick = {})
+                        }
                     }
                 }
             }
