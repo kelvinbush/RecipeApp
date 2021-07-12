@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -51,38 +53,51 @@ class RecipeListFragment : Fragment() {
                         color = MaterialTheme.colors.primary,
                         elevation = 8.dp
                     ) {
-                        Row(modifier = Modifier.fillMaxWidth()) {
-                            TextField(
-                                modifier = Modifier.fillMaxWidth(0.9f),
-                                value = query,
-                                onValueChange = { newValue ->
-                                    viewModel.onQueryChanged(newValue)
-                                },
-                                label = {
-                                    Text(text = "Search")
-                                },
-                                keyboardOptions = KeyboardOptions(
-                                    keyboardType = KeyboardType.Text,
-                                    imeAction = ImeAction.Search
-                                ),
-                                leadingIcon = {
-                                    Icon(
-                                        Icons.Filled.Search,
-                                        contentDescription = "Search Icon"
+                        Column {
+                            Row(modifier = Modifier.fillMaxWidth()) {
+                                TextField(
+                                    modifier = Modifier.fillMaxWidth(0.9f),
+                                    value = query,
+                                    onValueChange = { newValue ->
+                                        viewModel.onQueryChanged(newValue)
+                                    },
+                                    label = {
+                                        Text(text = "Search")
+                                    },
+                                    keyboardOptions = KeyboardOptions(
+                                        keyboardType = KeyboardType.Text,
+                                        imeAction = ImeAction.Search
+                                    ),
+                                    leadingIcon = {
+                                        Icon(
+                                            Icons.Filled.Search,
+                                            contentDescription = "Search Icon"
+                                        )
+                                    },
+                                    keyboardActions = KeyboardActions(
+                                        onSearch = {
+                                            viewModel.newSearch(query)
+                                            keyboardController?.hide()
+                                        }
+                                    ),
+                                    textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
+                                    colors = TextFieldDefaults.textFieldColors(
+                                        backgroundColor = MaterialTheme.colors.surface
                                     )
-                                },
-                                keyboardActions = KeyboardActions(
-                                    onSearch = {
-                                        viewModel.newSearch(query)
-                                        keyboardController?.hide()
-                                    }
-                                ),
-                                textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
-                                colors = TextFieldDefaults.textFieldColors(
-                                    backgroundColor = MaterialTheme.colors.surface
                                 )
-                            )
+                            }
+                            LazyRow {
+                                items(getAllFoodCategory()) { category ->
+                                    Text(
+                                        text = category.value,
+                                        style = MaterialTheme.typography.body2,
+                                        color = MaterialTheme.colors.secondary,
+                                        modifier = Modifier.padding(8.dp)
+                                    )
+                                }
+                            }
                         }
+
                     }
                     LazyColumn {
                         itemsIndexed(items = recipes) { index, item ->
@@ -93,5 +108,4 @@ class RecipeListFragment : Fragment() {
             }
         }
     }
-
 }

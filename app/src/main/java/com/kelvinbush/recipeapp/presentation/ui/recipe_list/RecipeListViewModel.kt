@@ -19,7 +19,7 @@ class RecipeListViewModel @Inject constructor(
     @Named("auth_token") private val token: String
 ) : ViewModel() {
     val recipes: MutableState<List<Recipe>> = mutableStateOf(listOf())
-    val query = mutableStateOf("Chicken")
+    val query = mutableStateOf("")
 
 
     init {
