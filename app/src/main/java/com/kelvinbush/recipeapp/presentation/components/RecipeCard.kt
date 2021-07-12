@@ -12,6 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.material.placeholder
+import com.google.accompanist.placeholder.material.shimmer
 import com.kelvinbush.recipeapp.domain.model.Recipe
 
 @Composable
@@ -37,7 +40,11 @@ fun RecipeCard(
                     contentDescription = "Place holder Image",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(min = 200.dp, max = 225.dp),
+                        .heightIn(min = 200.dp, max = 225.dp)
+                        .placeholder(
+                            visible = false,
+                            highlight = PlaceholderHighlight.shimmer()
+                        ),
                     contentScale = ContentScale.Crop
                 )
             }
