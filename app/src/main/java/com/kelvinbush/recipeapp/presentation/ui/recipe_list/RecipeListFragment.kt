@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
@@ -19,9 +20,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.kelvinbush.recipeapp.R
+import com.kelvinbush.recipeapp.presentation.components.RecipeCard
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "RecipeListFragment"
+
 @AndroidEntryPoint
 class RecipeListFragment : Fragment() {
 
@@ -36,9 +39,11 @@ class RecipeListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 val recipes = viewModel.recipes.value
-               LazyColumn {
-
-               }
+                LazyColumn {
+                    itemsIndexed(items = recipes) { index, item ->
+                        RecipeCard(recipe = item, onClick = {})
+                    }
+                }
             }
         }
     }
