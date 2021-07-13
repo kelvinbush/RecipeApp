@@ -33,6 +33,7 @@ class RecipeListViewModel @Inject constructor(
     fun newSearch() {
         viewModelScope.launch {
             loading.value = true
+            resetSearchState()
             delay(2000)
             val result = recipeRepository.search(
                 token = token,
@@ -56,6 +57,14 @@ class RecipeListViewModel @Inject constructor(
 
     fun onChangeCategoryScrollPosition(position: Int) {
         categoryScrollPosition = position
+    }
+
+    private fun clearSelectedCategory() {
+        selectedCategory.value = null
+    }
+    private fun resetSearchState(){
+        recipes.value = listOf()
+        if (selectedCategory.value?.value != query.value) clearSelectedCategory()
     }
 
 }
