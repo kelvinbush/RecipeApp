@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.kelvinbush.recipeapp.domain.model.Recipe
 import com.kelvinbush.recipeapp.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.FieldPosition
 import javax.inject.Inject
@@ -23,6 +24,7 @@ class RecipeListViewModel @Inject constructor(
     val query = mutableStateOf("")
     val selectedCategory: MutableState<FoodCategory?> = mutableStateOf(null)
     var categoryScrollPosition: Int = 0
+    val loading = mutableStateOf(false)
 
     init {
         newSearch()
@@ -30,12 +32,15 @@ class RecipeListViewModel @Inject constructor(
 
     fun newSearch() {
         viewModelScope.launch {
+            loading.value = true
+            delay(2000)
             val result = recipeRepository.search(
                 token = token,
                 page = 1,
                 query = query.value
             )
             recipes.value = result
+            loading.value = false
         }
     }
 
