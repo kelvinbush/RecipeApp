@@ -65,11 +65,13 @@ class RecipeListFragment : Fragment() {
                         onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
                         onChangeCategoryScrollPosition = viewModel::onChangeCategoryScrollPosition
                     )
-                    CircularIndeterminateProgressBar(isDisplayed = loading)
-                    LazyColumn {
-                        itemsIndexed(items = recipes) { _, item ->
-                            RecipeCard(recipe = item, onClick = {})
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        LazyColumn {
+                            itemsIndexed(items = recipes) { _, item ->
+                                RecipeCard(recipe = item, onClick = {})
+                            }
                         }
+                        CircularIndeterminateProgressBar(isDisplayed = loading)
                     }
                 }
             }
