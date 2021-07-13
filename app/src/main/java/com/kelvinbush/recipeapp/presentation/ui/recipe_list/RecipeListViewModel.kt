@@ -8,6 +8,7 @@ import com.kelvinbush.recipeapp.domain.model.Recipe
 import com.kelvinbush.recipeapp.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.text.FieldPosition
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -21,6 +22,7 @@ class RecipeListViewModel @Inject constructor(
     val recipes: MutableState<List<Recipe>> = mutableStateOf(listOf())
     val query = mutableStateOf("")
     val selectedCategory: MutableState<FoodCategory?> = mutableStateOf(null)
+    var categoryScrollPosition: Int = 0
 
     init {
         newSearch()
@@ -45,6 +47,10 @@ class RecipeListViewModel @Inject constructor(
         val newCategory = getFoodCategory(category)
         selectedCategory.value = newCategory
         onQueryChanged(category)
+    }
+
+    fun onChangeCategoryScrollPosition(position: Int) {
+        categoryScrollPosition = position
     }
 
 }

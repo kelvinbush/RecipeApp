@@ -4,16 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,6 +31,7 @@ import androidx.fragment.app.viewModels
 import com.kelvinbush.recipeapp.presentation.components.FoodCategoryChip
 import com.kelvinbush.recipeapp.presentation.components.RecipeCard
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 private const val TAG = "RecipeListFragment"
 
@@ -89,7 +93,14 @@ class RecipeListFragment : Fragment() {
                                     )
                                 )
                             }
-                            LazyRow(modifier = Modifier.padding(start = 8.dp, bottom = 8.dp)) {
+                            val scrollState = rememberScrollState()
+                            val scope = rememberCoroutineScope()
+                            LazyRow(
+                                modifier = Modifier
+                                    .horizontalScroll(scrollState)
+                                    .padding(start = 8.dp, bottom = 8.dp)
+                            ) {
+                                scope.launch { scrollState.scrollTo(viewModel.categoryScrollPosition) }
                                 items(getAllFoodCategory()) { category ->
                                     FoodCategoryChip(
                                         category = category.value,
