@@ -21,6 +21,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.kelvinbush.recipeapp.presentation.ui.recipe_list.FoodCategory
 import com.kelvinbush.recipeapp.presentation.ui.recipe_list.getAllFoodCategory
 
@@ -42,7 +43,7 @@ fun SearchAppBar(
         elevation = 8.dp
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            Row {
+            Row  {
                 TextField(
                     modifier = Modifier.fillMaxWidth(0.9f),
                     value = query,
@@ -73,6 +74,9 @@ fun SearchAppBar(
                         backgroundColor = MaterialTheme.colors.surface
                     )
                 )
+//                ConstraintLayout(){
+//
+//                }
             }
             val state = rememberScrollState()
             LaunchedEffect(Unit) { state.animateScrollTo(scrollPosition) }
