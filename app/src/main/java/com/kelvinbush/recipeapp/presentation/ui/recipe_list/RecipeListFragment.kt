@@ -1,21 +1,20 @@
 package com.kelvinbush.recipeapp.presentation.ui.recipe_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -60,8 +59,8 @@ class RecipeListFragment : Fragment() {
                         color = Color.White,
                         elevation = 8.dp
                     ) {
-                        Column {
-                            Row(modifier = Modifier.fillMaxWidth()) {
+                        Column(modifier = Modifier.fillMaxWidth()) {
+                            Row {
                                 TextField(
                                     modifier = Modifier.fillMaxWidth(0.9f),
                                     value = query,
@@ -93,21 +92,21 @@ class RecipeListFragment : Fragment() {
                                     )
                                 )
                             }
-                            val scrollState = rememberScrollState()
-                            val scope = rememberCoroutineScope()
-                            LazyRow(
+                            val state = rememberScrollState()
+                            LaunchedEffect(Unit) { state.animateScrollTo(viewModel.categoryScrollPosition) }
+                            Row(
                                 modifier = Modifier
-                                    .horizontalScroll(scrollState)
-                                    .padding(start = 8.dp, bottom = 8.dp)
+                                    .horizontalScroll(state = state)
+                                    .padding(start = 8.dp, bottom = 8.dp, top = 8.dp),
                             ) {
-                                scope.launch { scrollState.scrollTo(viewModel.categoryScrollPosition) }
-                                items(getAllFoodCategory()) { category ->
+                                for (category in getAllFoodCategory()) {
                                     FoodCategoryChip(
                                         category = category.value,
                                         isSelected = selectedCategory == category,
                                         onExecuteSearch = viewModel::newSearch,
                                         onSelectedCategoryChanged = {
                                             viewModel.onSelectedCategoryChanged(it)
+                                            viewModel.onChangeCategoryScrollPosition(state.value)
                                         }
                                     )
                                 }
