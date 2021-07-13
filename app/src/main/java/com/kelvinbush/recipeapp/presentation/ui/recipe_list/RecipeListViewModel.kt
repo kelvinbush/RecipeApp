@@ -66,5 +66,4 @@ class RecipeListViewModel @Inject constructor(
         recipes.value = listOf()
         if (selectedCategory.value?.value != query.value) clearSelectedCategory()
     }
-
 }
