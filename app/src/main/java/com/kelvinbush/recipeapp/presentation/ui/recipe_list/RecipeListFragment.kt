@@ -48,6 +48,7 @@ class RecipeListFragment : Fragment() {
                 val recipes = viewModel.recipes.value
                 val query = viewModel.query.value
                 val keyboardController = LocalSoftwareKeyboardController.current
+                val selectedCategory = viewModel.selectedCategory.value
                 Column {
                     Surface(
                         modifier = Modifier
@@ -78,7 +79,7 @@ class RecipeListFragment : Fragment() {
                                     },
                                     keyboardActions = KeyboardActions(
                                         onSearch = {
-                                            viewModel.newSearch(query)
+                                            viewModel.newSearch()
                                             keyboardController?.hide()
                                         }
                                     ),
@@ -88,13 +89,14 @@ class RecipeListFragment : Fragment() {
                                     )
                                 )
                             }
-                            LazyRow {
+                            LazyRow(modifier = Modifier.padding(start = 8.dp, bottom = 8.dp)) {
                                 items(getAllFoodCategory()) { category ->
                                     FoodCategoryChip(
                                         category = category.value,
-                                        onExecuteSearch = {
-                                            viewModel.onQueryChanged(it)
-                                            viewModel.newSearch(it)
+                                        isSelected = selectedCategory == category,
+                                        onExecuteSearch = viewModel::newSearch,
+                                        onSelectedCategoryChanged = {
+                                            viewModel.onSelectedCategoryChanged(it)
                                         }
                                     )
                                 }
@@ -102,7 +104,7 @@ class RecipeListFragment : Fragment() {
                         }
                     }
                     LazyColumn {
-                        itemsIndexed(items = recipes) { index, item ->
+                        itemsIndexed(items = recipes) { _, item ->
                             RecipeCard(recipe = item, onClick = {})
                         }
                     }
