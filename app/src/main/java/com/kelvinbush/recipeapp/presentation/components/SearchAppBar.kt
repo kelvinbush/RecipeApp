@@ -38,7 +38,7 @@ fun SearchAppBar(
     Surface(
         modifier = Modifier
             .fillMaxWidth(),
-        color = Color.White,
+        color = MaterialTheme.colors.surface,
         elevation = 8.dp
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
