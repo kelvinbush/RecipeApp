@@ -1,10 +1,12 @@
 package com.kelvinbush.recipeapp.presentation.ui.recipe_list
 
+import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
@@ -27,6 +29,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.kelvinbush.recipeapp.presentation.BaseApplication
 import com.kelvinbush.recipeapp.presentation.components.CircularIndeterminateProgressBar
 import com.kelvinbush.recipeapp.presentation.components.FoodCategoryChip
 import com.kelvinbush.recipeapp.presentation.components.RecipeCard
@@ -34,6 +37,7 @@ import com.kelvinbush.recipeapp.presentation.components.SearchAppBar
 import com.kelvinbush.recipeapp.presentation.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 private const val TAG = "RecipeListFragment"
 
@@ -48,10 +52,11 @@ class RecipeListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val application = requireActivity().application as BaseApplication
 
         return ComposeView(requireContext()).apply {
             setContent {
-                AppTheme(darkTheme = false) {
+                AppTheme(darkTheme = application.isDark.value) {
                     val recipes = viewModel.recipes.value
                     val query = viewModel.query.value
                     val loading = viewModel.loading.value
@@ -65,9 +70,14 @@ class RecipeListFragment : Fragment() {
                             scrollPosition = viewModel.categoryScrollPosition,
                             selectedCategory = selectedCategory,
                             onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
-                            onChangeCategoryScrollPosition = viewModel::onChangeCategoryScrollPosition
+                            onChangeCategoryScrollPosition = viewModel::onChangeCategoryScrollPosition,
+                            onToggleTheme = { application.toggleLightTheme() }
                         )
-                        Box(modifier = Modifier.fillMaxSize()) {
+                        Box(
+                            modifier = Modifier
+                                .background(color = MaterialTheme.colors.background)
+                                .fillMaxSize()
+                        ) {
                             LazyColumn {
                                 itemsIndexed(items = recipes) { _, item ->
                                     RecipeCard(recipe = item, onClick = {})

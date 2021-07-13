@@ -1,27 +1,26 @@
 package com.kelvinbush.recipeapp.presentation.components
 
+import android.text.Layout
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.kelvinbush.recipeapp.presentation.ui.recipe_list.FoodCategory
 import com.kelvinbush.recipeapp.presentation.ui.recipe_list.getAllFoodCategory
 
@@ -33,7 +32,8 @@ fun SearchAppBar(
     scrollPosition: Int,
     selectedCategory: FoodCategory?,
     onSelectedCategoryChanged: (String) -> Unit,
-    onChangeCategoryScrollPosition: (Int) -> Unit
+    onChangeCategoryScrollPosition: (Int) -> Unit,
+    onToggleTheme: () -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     Surface(
@@ -43,7 +43,7 @@ fun SearchAppBar(
         elevation = 8.dp
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            Row  {
+            Row {
                 TextField(
                     modifier = Modifier.fillMaxWidth(0.9f),
                     value = query,
@@ -74,9 +74,21 @@ fun SearchAppBar(
                         backgroundColor = MaterialTheme.colors.surface
                     )
                 )
-//                ConstraintLayout(){
-//
-//                }
+                ConstraintLayout(
+                    modifier = Modifier.align(CenterVertically)
+                ) {
+                    val menu = createRef()
+                    IconButton(
+                        onClick = { onToggleTheme() },
+                        modifier = Modifier
+                            .constrainAs(menu) {
+                                end.linkTo(parent.end)
+                                top.linkTo(parent.top)
+                                bottom.linkTo(parent.bottom)
+                            }) {
+                        Icon(Icons.Filled.MoreVert, contentDescription = "hey")
+                    }
+                }
             }
             val state = rememberScrollState()
             LaunchedEffect(Unit) { state.animateScrollTo(scrollPosition) }
@@ -100,4 +112,5 @@ fun SearchAppBar(
         }
 
     }
+
 }

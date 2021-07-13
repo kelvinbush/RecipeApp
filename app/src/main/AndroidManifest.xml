@@ -13,7 +13,9 @@
         android:theme="@style/Theme.RecipeApp">
         <activity
             android:name=".presentation.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.RecipeApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
