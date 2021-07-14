@@ -1,6 +1,6 @@
 package com.kelvinbush.recipeapp.presentation.components
 
-import android.text.Layout
+
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -112,5 +112,4 @@ fun SearchAppBar(
         }
 
     }
-
 }
