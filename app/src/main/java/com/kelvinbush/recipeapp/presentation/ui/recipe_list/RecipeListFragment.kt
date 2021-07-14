@@ -78,8 +78,8 @@ class RecipeListFragment : Fragment() {
                                 onToggleTheme = { application.toggleLightTheme() }
                             )
                         },
-                        bottomBar = { myBottomBar() },
-                        drawerContent = {},
+                        bottomBar = { MyBottomBar() },
+                        drawerContent = { Drawer()},
                     ) {
                         Box(
                             modifier = Modifier
@@ -101,11 +101,11 @@ class RecipeListFragment : Fragment() {
 }
 
 @Composable
-fun myBottomBar() {
+fun MyBottomBar() {
     BottomNavigation(
         elevation = 12.dp
     ) {
-        BottomNavigationItem(selected = false, onClick = {}, icon = {
+        BottomNavigationItem(selected = true, onClick = {}, icon = {
             Icon(
                 Icons.Default.ThumbUp,
                 contentDescription = ""
@@ -117,11 +117,22 @@ fun myBottomBar() {
                 contentDescription = ""
             )
         })
-        BottomNavigationItem(selected = true, onClick = {}, icon = {
+        BottomNavigationItem(selected = false, onClick = {}, icon = {
             Icon(
                 Icons.Default.AccountBox,
                 contentDescription = ""
             )
         })
+    }
+}
+
+@Composable
+fun Drawer() {
+    Column(){
+        Text(text = "Item 1")
+        Text(text = "Item 1")
+        Text(text = "Item 1")
+        Text(text = "Item 1")
+        Text(text = "Item 1")
     }
 }
