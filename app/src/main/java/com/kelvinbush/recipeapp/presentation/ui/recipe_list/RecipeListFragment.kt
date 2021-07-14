@@ -15,7 +15,10 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -75,7 +78,7 @@ class RecipeListFragment : Fragment() {
                                 onToggleTheme = { application.toggleLightTheme() }
                             )
                         },
-                        bottomBar = {},
+                        bottomBar = { myBottomBar() },
                         drawerContent = {},
                     ) {
                         Box(
@@ -94,5 +97,31 @@ class RecipeListFragment : Fragment() {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun myBottomBar() {
+    BottomNavigation(
+        elevation = 12.dp
+    ) {
+        BottomNavigationItem(selected = false, onClick = {}, icon = {
+            Icon(
+                Icons.Default.ThumbUp,
+                contentDescription = ""
+            )
+        })
+        BottomNavigationItem(selected = false, onClick = {}, icon = {
+            Icon(
+                Icons.Default.Search,
+                contentDescription = ""
+            )
+        })
+        BottomNavigationItem(selected = true, onClick = {}, icon = {
+            Icon(
+                Icons.Default.AccountBox,
+                contentDescription = ""
+            )
+        })
     }
 }
