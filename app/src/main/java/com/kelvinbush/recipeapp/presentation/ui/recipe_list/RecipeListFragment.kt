@@ -1,46 +1,33 @@
 package com.kelvinbush.recipeapp.presentation.ui.recipe_list
 
-import android.app.Application
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.kelvinbush.recipeapp.presentation.BaseApplication
 import com.kelvinbush.recipeapp.presentation.components.CircularIndeterminateProgressBar
-import com.kelvinbush.recipeapp.presentation.components.FoodCategoryChip
 import com.kelvinbush.recipeapp.presentation.components.RecipeCard
 import com.kelvinbush.recipeapp.presentation.components.SearchAppBar
 import com.kelvinbush.recipeapp.presentation.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 private const val TAG = "RecipeListFragment"
 
@@ -79,7 +66,7 @@ class RecipeListFragment : Fragment() {
                             )
                         },
                         bottomBar = { MyBottomBar() },
-                        drawerContent = { Drawer()},
+                        drawerContent = { Drawer() },
                     ) {
                         Box(
                             modifier = Modifier
@@ -128,7 +115,7 @@ fun MyBottomBar() {
 
 @Composable
 fun Drawer() {
-    Column(){
+    Column() {
         Text(text = "Item 1")
         Text(text = "Item 1")
         Text(text = "Item 1")
