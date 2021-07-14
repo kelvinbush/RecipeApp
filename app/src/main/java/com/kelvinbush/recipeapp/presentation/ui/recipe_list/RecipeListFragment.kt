@@ -62,20 +62,25 @@ class RecipeListFragment : Fragment() {
                     val loading = viewModel.loading.value
 
                     val selectedCategory = viewModel.selectedCategory.value
-                    Column {
-                        SearchAppBar(
-                            query = query,
-                            onQueryChanged = viewModel::onQueryChanged,
-                            onExecuteSearch = viewModel::newSearch,
-                            scrollPosition = viewModel.categoryScrollPosition,
-                            selectedCategory = selectedCategory,
-                            onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
-                            onChangeCategoryScrollPosition = viewModel::onChangeCategoryScrollPosition,
-                            onToggleTheme = { application.toggleLightTheme() }
-                        )
+                    Scaffold(
+                        topBar = {
+                            SearchAppBar(
+                                query = query,
+                                onQueryChanged = viewModel::onQueryChanged,
+                                onExecuteSearch = viewModel::newSearch,
+                                scrollPosition = viewModel.categoryScrollPosition,
+                                selectedCategory = selectedCategory,
+                                onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
+                                onChangeCategoryScrollPosition = viewModel::onChangeCategoryScrollPosition,
+                                onToggleTheme = { application.toggleLightTheme() }
+                            )
+                        },
+                        bottomBar = {},
+                        drawerContent = {},
+                    ) {
                         Box(
                             modifier = Modifier
-                                .background(color = MaterialTheme.colors.background)
+                                .background(color = MaterialTheme.colors.surface)
                                 .fillMaxSize()
                         ) {
                             LazyColumn {
