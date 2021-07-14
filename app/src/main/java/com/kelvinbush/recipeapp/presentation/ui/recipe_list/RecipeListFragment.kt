@@ -50,6 +50,7 @@ class RecipeListFragment : Fragment() {
                     val recipes = viewModel.recipes.value
                     val query = viewModel.query.value
                     val loading = viewModel.loading.value
+                    val page = viewModel.page.value
 
                     val selectedCategory = viewModel.selectedCategory.value
                     Scaffold(
@@ -65,8 +66,8 @@ class RecipeListFragment : Fragment() {
                                 onToggleTheme = { application.toggleLightTheme() }
                             )
                         },
-                        bottomBar = { MyBottomBar() },
-                        drawerContent = { Drawer() },
+                        /*bottomBar = { MyBottomBar() },
+                        drawerContent = { Drawer() },*/
                     ) {
                         Box(
                             modifier = Modifier
